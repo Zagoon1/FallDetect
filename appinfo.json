@@ -1,0 +1,19 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "tomasacostaalmeda@gmail.com",
+    "longName": "FallDetect2",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "sdkVersion": "3",
+    "shortName": "FallDetect2",
+    "uuid": "31abf20f-1ba1-4225-907c-b66b28d8cf7e",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
