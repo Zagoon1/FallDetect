@@ -132,11 +132,11 @@ static void outbox_sent_handler(DictionaryIterator *iterator, void *context) {
 
 
 
-// Manejadores de pulsación de botones. No se usan en el código final, pero se usaron en la parte de investigación
-// del proyecto: Se recogían los datos del acelerómetro y con los botones se podía parar de recoger datos e ir 
-// mostrándolos por pantalla de manera ordenada para analizarlos.
+// Manejadores de pulsación de botones. Hay uno para la pulsación y otro para la liberación del botón. Sólo se activan
+// si han pasado 700milisegundos. Si se activan se pasa a la pantalla de cuenta atrás. Los dos primeros manejadores 
+// servían para mostrar por pantalla los valores de acel, paso por paso. Se dejan por si se desean utilizar.
 
-static void up_click_handler(ClickRecognizerRef recognizer, void *context) { // MANEJADOR DE CLICK (no se usa)
+/*static void up_long_click_handler(ClickRecognizerRef recognizer, void *context) { // MANEJADOR DE CLICK (no se usa)
   accel_data_service_unsubscribe();
   
   
@@ -157,12 +157,47 @@ static void down_click_handler(ClickRecognizerRef recognizer, void *context) { /
   snprintf(char_buffer2,sizeof(char_buffer2),"Max: %d\n Min: %d",max,min);
   text_layer_set_text(s_output_layer2,char_buffer2);
   
+}*/
+
+void up_long_click_handler(ClickRecognizerRef recognizer, void *context) {
+  
+ // Window *window = (Window *)context;
 }
+
+void up_long_click_release_handler(ClickRecognizerRef recognizer, void *context) {
+  
+  //Window *window = (Window *)context;
+  window_stack_push(window2, true/*animated*/); // Paso a la ventana de la cuenta atrás.
+}
+
+void down_long_click_handler(ClickRecognizerRef recognizer, void *context) {
+  
+ // Window *window = (Window *)context;
+}
+
+void down_long_click_release_handler(ClickRecognizerRef recognizer, void *context) {
+  
+  //Window *window = (Window *)context;
+  window_stack_push(window2, true/*animated*/); // Paso a la ventana de la cuenta atrás.
+}
+
+void select_long_click_handler(ClickRecognizerRef recognizer, void *context) {
+  
+ // Window *window = (Window *)context;
+}
+
+void select_long_click_release_handler(ClickRecognizerRef recognizer, void *context) {
+  
+  //Window *window = (Window *)context;
+  window_stack_push(window2, true/*animated*/); // Paso a la ventana de la cuenta atrás.
+}
+
 
 static void click_config_provider(void *context) {
   // Register the ClickHandlers
-  window_single_click_subscribe(BUTTON_ID_UP, up_click_handler);
-  window_single_click_subscribe(BUTTON_ID_DOWN, down_click_handler);
+  window_long_click_subscribe(BUTTON_ID_UP, 700, up_long_click_handler, up_long_click_release_handler);
+  window_long_click_subscribe(BUTTON_ID_DOWN, 700, down_long_click_handler, down_long_click_release_handler);
+  window_long_click_subscribe(BUTTON_ID_SELECT, 700, select_long_click_handler, select_long_click_release_handler);
 }
 
 // MANEJADOR DE DATOS DE ACELEROMETRO
